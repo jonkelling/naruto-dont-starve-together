@@ -159,7 +159,7 @@ GLOBAL.LARGE_USES = GetModConfigData("LARGE_USES")
 GLOBAL.RANGE_CHECK = GetModConfigData("RANGE_CHECK")
 
 local KUNAITHROW = GLOBAL.Action(4,		-- priority
-								false,	-- instant (set to not instant)
+								true,	-- instant
 								true,	-- right mouse button
 								10,		-- distance check
 								false,	-- ghost valid (set to not ghost valid)
