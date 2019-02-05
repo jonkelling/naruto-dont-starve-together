@@ -6,13 +6,13 @@ end
 
 local function onmaxchakra(self, maxchakra)
     --self:SetMax(maxchakra)
-    --self.inst.components.chakra:SetIsFull((self.currentchakra or maxchakra) >= maxchakra)
+    --self.inst.components.narutochakra:SetIsFull((self.currentchakra or maxchakra) >= maxchakra)
     onpercent(self)
 end
 
 local function oncurrentchakra(self, currentchakra)
 	--self.currentchakra = currentchakra
-    --self.inst.components.chakra:SetIsFull(currentchakra >= self.maxchakra)
+    --self.inst.components.narutochakra:SetIsFull(currentchakra >= self.maxchakra)
     onpercent(self)
 end
 

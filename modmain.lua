@@ -30,7 +30,7 @@ Assets = {
 	Asset( "IMAGE", "images/avatars/avatar_ghost_naruto.tex" ),
     Asset( "ATLAS", "images/avatars/avatar_ghost_naruto.xml" ),
 
-	Asset("ANIM", "anim/chakra.zip"),
+	Asset("ANIM", "anim/narutochakra.zip"),
 
     Asset( "IMAGE", "images/recipe_tab/tab_ninja_gear.tex" ),
 	Asset( "ATLAS", "images/recipe_tab/tab_ninja_gear.xml" )
@@ -131,25 +131,26 @@ AddMinimapAtlas("images/map_icons/naruto.xml")
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("naruto", "MALE")
 
-local ChakraBadge = GLOBAL.require("widgets/chakrabadge")
-
 GLOBAL.CONTROLS = nil
 
-local function AddChakraIndicator(self)
-	controls = self -- this just makes controls available in the rest of the modmain's functions
+if not GLOBAL.KnownModIndex:IsModEnabled("workshop-644104565") then
+	local ChakraBadge = GLOBAL.require("widgets/narutochakrabadge")
 
-	controls.chakraindicator = controls.sidepanel:AddChild(ChakraBadge())
-	controls.chakraindicator:SetPosition(0, -151, 0)
+	local function AddChakraIndicator(self)
+		controls = self -- this just makes controls available in the rest of the modmain's functions
 
-	controls.chakraindicator:MoveToBack()
+		controls.chakraindicator = controls.sidepanel:AddChild(ChakraBadge())
+		controls.chakraindicator:SetPosition(0, -151, 0)
 
-	controls.chakraindicator:SetClickable(false)
+		controls.chakraindicator:MoveToBack()
 
-	GLOBAL.CONTROLS = controls
+		controls.chakraindicator:SetClickable(false)
+
+		GLOBAL.CONTROLS = controls
+	end
+
+	AddClassPostConstruct("widgets/controls", AddChakraIndicator)
 end
-
-AddClassPostConstruct("widgets/controls", AddChakraIndicator)
-
 
 --- Kunai
 

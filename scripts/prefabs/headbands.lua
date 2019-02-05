@@ -81,7 +81,9 @@ local function MakeHeadband(name)
             if player.prefab ~= nil and not player:HasTag('ninja') and player.components.inventory ~= nil then
                 inst:DoTaskInTime(0.1, function()
                     player.components.inventory:DropItem(inst)
-                    player.components.talker:Say("I'm not a Ninja.")
+                    if player.components.talker then
+                        player.components.talker:Say("I'm not a Ninja.")
+                    end
                 end)
             end
         end

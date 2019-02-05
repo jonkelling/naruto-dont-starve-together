@@ -48,15 +48,19 @@ local function onbecamehuman(inst)
 	inst.components.locomotor.walkspeed = 4
 	inst.components.locomotor.runspeed = 6
 
-    if CONTROLS then
-        CONTROLS.chakraindicator:Show()
+    if not KnownModIndex:IsModEnabled("workshop-644104565") then
+        if CONTROLS then
+            CONTROLS.chakraindicator:Show()
+        end
     end
 end
 
 
 local function OnBecameGhost(inst)
-    if CONTROLS then
-        CONTROLS.chakraindicator:Hide()
+    if not KnownModIndex:IsModEnabled("workshop-644104565") then
+        if CONTROLS then
+            CONTROLS.chakraindicator:Hide()
+        end
     end
 end
 
@@ -124,7 +128,12 @@ end
 local function OnChakraDelta(inst, data)
     TakeHungerForChakra(inst, data)
 
-    local chakra = inst.components.chakra.currentchakra
+    local chakra = nil
+    if not KnownModIndex:IsModEnabled("workshop-644104565") then
+        chakra = inst.components.narutochakra.currentchakra
+    else 
+        chakra = inst.components.chakra:GetCurrent()
+    end
 
     if chakra == nil then return end
 
@@ -166,10 +175,13 @@ local function master_postinit(inst)
 	inst.OnLoad = OnLoad
     inst.OnNewSpawn = OnNewSpawn
 
-    inst:AddComponent('chakra')
-    inst.components.chakra:SetMaxChakra(100)
-    inst.components.chakra:StartRegen(1, 10)
-
+    if not KnownModIndex:IsModEnabled("workshop-644104565") then
+        inst:AddComponent('narutochakra')
+        inst.components.narutochakra:SetMaxChakra(100)
+        inst.components.narutochakra:StartRegen(1, 10)
+    end
+    
+    -- This event is pushed by the Jutsu mod as well
     inst:ListenForEvent('chakradelta', OnChakraDelta)
 end
 

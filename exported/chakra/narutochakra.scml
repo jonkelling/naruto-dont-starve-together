@@ -39,7 +39,7 @@
 		<file id="20" name="chakra_level/chakra_level-20.png" width="68" height="68" pivot_x="0.5" pivot_y="0.5" />
 		<file id="21" name="chakra_level/chakra_level-21.png" width="68" height="68" pivot_x="0.5" pivot_y="0.5" />
 	</folder>
-	<entity id="0" name="chakra">
+	<entity id="0" name="narutochakra">
 		<animation id="0" name="anim" length="767">
 			<mainline>
 				<key id="0" time="0">
