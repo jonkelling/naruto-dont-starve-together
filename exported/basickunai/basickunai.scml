@@ -3,7 +3,7 @@
 	<folder id="0" name="kunai01">
 		<file id="0" name="kunai01/kunai01-0.png" width="120" height="248" pivot_x="0.456662" pivot_y="0.0603851" />
 	</folder>
-	<entity id="0" name="kunai">
+	<entity id="0" name="basickunai">
 		<animation id="0" name="idle" length="200">
 			<mainline>
 				<key id="0" time="0">
@@ -28,7 +28,7 @@
 					<object_ref id="0" name="kunai01" abs_x="0" abs_y="0" abs_pivot_x="0.456662" abs_pivot_y="0.0603851" abs_angle="0" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="0" key="6" z_index="1" />
 				</key>
 			</mainline>
-			<timeline id="0" name="kunai01">
+			<timeline id="0" name="basickunai01">
 				<key id="0" time="0" spin="1">
 					<object folder="0" file="0" x="0.45" y="-0.1" scale_x="1" scale_y="1" angle="0" />
 				</key>

@@ -1,7 +1,7 @@
 local assets =
 { 
-    Asset("ANIM", "anim/kunai.zip"),
-    Asset("ANIM", "anim/swap_kunai.zip"), 
+    Asset("ANIM", "anim/basickunai.zip"),
+    Asset("ANIM", "anim/swap_basickunai.zip"), 
 
     Asset("ATLAS", "images/inventoryimages/kunai.xml"),
     Asset("IMAGE", "images/inventoryimages/kunai.tex")
@@ -15,7 +15,7 @@ local smallhits =
 }
 
 local function OnEquip(inst, owner) 
-    owner.AnimState:OverrideSymbol("swap_object", "swap_kunai", "kunai")
+    owner.AnimState:OverrideSymbol("swap_object", "swap_basickunai", "kunai")
     owner.AnimState:Show("ARM_carry") 
     owner.AnimState:Hide("ARM_normal") 
 end
@@ -34,8 +34,8 @@ local function fn(colour)
 
     MakeInventoryPhysics(inst)
    
-	inst.AnimState:SetBank("kunai")
-    inst.AnimState:SetBuild("kunai")
+	inst.AnimState:SetBank("basickunai")
+    inst.AnimState:SetBuild("basickunai")
     inst.AnimState:PlayAnimation("idle")
 	
 	inst.entity:SetPristine()

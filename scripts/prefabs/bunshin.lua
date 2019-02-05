@@ -4,8 +4,8 @@ local assets =
     Asset("SOUND", "sound/maxwell.fsb"),
     Asset("ANIM", "anim/swap_pickaxe.zip"),
     Asset("ANIM", "anim/swap_axe.zip"),
-    Asset("ANIM", "anim/kunai.zip"),
-    Asset("ANIM", "anim/swap_kunai.zip")
+    Asset("ANIM", "anim/basickunai.zip"),
+    Asset("ANIM", "anim/swap_basickunai.zip")
 }
 
 local brain = require "brains/bunshinbrain"
@@ -19,7 +19,7 @@ local items =
 
 local function EquipItem(inst, item)
     if item then
-        inst.AnimState:OverrideSymbol("swap_object", 'swap_kunai', 'kunai')
+        inst.AnimState:OverrideSymbol("swap_object", 'swap_basickunai', 'kunai')
         inst.AnimState:Show("ARM_carry") 
         inst.AnimState:Hide("ARM_normal")
     end

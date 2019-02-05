@@ -1,6 +1,6 @@
 local assets =
 {
-	Asset("ANIM", "anim/kunai_projectile.zip"),
+	Asset("ANIM", "anim/basickunai_projectile.zip"),
 }
 
 local function fn()
@@ -13,8 +13,8 @@ local function fn()
     MakeInventoryPhysics(inst)
     RemovePhysicsColliders(inst)
 
-    inst.AnimState:SetBank("kunai_projectile")
-    inst.AnimState:SetBuild("kunai_projectile")
+    inst.AnimState:SetBank("basickunai_projectile")
+    inst.AnimState:SetBuild("basickunai_projectile")
     inst.AnimState:PlayAnimation("idle", true)
 	
     if not TheWorld.ismastersim then

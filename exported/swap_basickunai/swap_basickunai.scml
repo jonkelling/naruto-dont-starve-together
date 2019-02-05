@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b5">
-	<folder id="0" name="kunai">
-		<file id="0" name="kunai/kunai-0.png" width="60" height="220" pivot_x="0.471964" pivot_y="0.334553" />
-	</folder>
-	<entity id="0" name="swap_kunai">
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
+    <folder id="0" name="kunai">
+        <file id="0" name="kunai/kunai-0.png" width="60" height="220" pivot_x="0.471964" pivot_y="0.334553"/>
+    </folder>
+    <entity id="0" name="swap_basickunai">
 		<animation id="0" name="BUILD" length="1000">
 			<mainline>
 				<key id="0" time="0">
@@ -256,5 +256,5 @@
 				</key>
 			</timeline>
 		</animation>
-	</entity>
+    </entity>
 </spriter_data>

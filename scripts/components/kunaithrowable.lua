@@ -75,11 +75,11 @@ function Kunaithrowable:LaunchProjectile(attacker, target)
         end
 
 	    local proj = SpawnPrefab(self.projectile)
-	    if proj then
+        if proj then
             if proj.components.projectile then
     	        proj.Transform:SetPosition(attacker.Transform:GetWorldPosition() )
 				--#rezecib had to add the line below because projectile refers back to weapon instead
-				proj.components.projectile.onhit = self.onattack
+                proj.components.projectile.onhit = self.onattack
     	        proj.components.projectile:Throw(attacker, target, attacker)
             elseif proj.components.complexprojectile then
                 proj.Transform:SetPosition( attacker.Transform:GetWorldPosition() )
