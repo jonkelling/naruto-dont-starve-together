@@ -17,7 +17,11 @@ end
 
 local function canRead(inst)
     --return inst.components.sanity:GetMaxWithPenalty() >= TUNING.SHADOWWAXWELL_SANITY_PENALTY
-    return inst.components.chakra.currentchakra > CLONE_HEALTH_COST -- > instead of >= so player doesn't die
+    if KnownModIndex:IsModEnabled("workshop-644104565") then
+        return inst.components.chakra.CheckEnough(CLONE_HEALTH_COST)
+    else
+        return inst.components.chakra.currentchakra > CLONE_HEALTH_COST -- > instead of >= so player doesn't die
+    end
 end
 
 local function onread(inst, reader, ignorecosts)
@@ -49,8 +53,13 @@ local function onread(inst, reader, ignorecosts)
         if reader.components.talker then
             reader.components.talker:Say('Kage Bunshin no Jutsu!')
         end
-
-        reader.components.chakra:DoDelta(-CLONE_HEALTH_COST, 'Kage Bunshin no Jutsu', reader)
+        
+        if KnownModIndex:IsModEnabled("workshop-644104565") then
+            reader.components.chakra.UseAmount(CLONE_HEALTH_COST)
+        else
+            reader.components.chakra:DoDelta(-CLONE_HEALTH_COST, 'Kage Bunshin no Jutsu', reader)
+        end
+        
         inst.SoundEmitter:PlaySound("dontstarve/maxwell/shadowmax_appear")
         return true
     end
