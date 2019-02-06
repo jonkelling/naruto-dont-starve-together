@@ -15,7 +15,7 @@ local smallhits =
 }
 
 local function OnEquip(inst, owner) 
-    owner.AnimState:OverrideSymbol("swap_object", "swap_basickunai", "kunai")
+    owner.AnimState:OverrideSymbol("swap_object", "swap_basickunai", "swap_basickunai")
     owner.AnimState:Show("ARM_carry") 
     owner.AnimState:Hide("ARM_normal") 
 end

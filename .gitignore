@@ -1,5 +1,6 @@
 anim/
 anim/*
+.tmp*/
 *.tex
 *.zip
 *.xml
