@@ -14,12 +14,12 @@ local items =
 {
     AXE = "swap_axe",
     PICK = "swap_pickaxe",
-    SWORD = "swap_kunai"
+    SWORD = "swap_basickunai"
 }
 
 local function EquipItem(inst, item)
     if item then
-        inst.AnimState:OverrideSymbol("swap_object", 'swap_basickunai', 'kunai')
+        inst.AnimState:OverrideSymbol("swap_object", 'swap_basickunai', 'swap_basickunai')
         inst.AnimState:Show("ARM_carry") 
         inst.AnimState:Hide("ARM_normal")
     end
@@ -133,7 +133,7 @@ local function fn()
     inst.items = items
     inst.equipfn = EquipItem
 
-    inst.lifetime = 5 * 60 --5 minutes; TUNING.SHADOWWAXWELL_LIFETIME
+    inst.lifetime = CLONE_LIFETIME * 60
     inst.death = inst:DoTaskInTime(inst.lifetime, die)
 
     inst.OnSave = onsave

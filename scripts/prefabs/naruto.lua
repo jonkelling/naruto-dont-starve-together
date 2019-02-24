@@ -45,8 +45,8 @@ local start_inv = {
 -- When the character is revived from human
 local function onbecamehuman(inst)
 	-- Set speed when loading or reviving from ghost (optional)
-	inst.components.locomotor.walkspeed = 4
-	inst.components.locomotor.runspeed = 6
+	inst.components.locomotor.walkspeed = 5
+	inst.components.locomotor.runspeed = 7
 
     if not KnownModIndex:IsModEnabled("workshop-644104565") then
         if CONTROLS then
@@ -118,11 +118,7 @@ local function TakeHungerForChakra(inst, data)
 
     if data.amount == nil or data.amount >= 0 then return end
 
-    local times = data.amount / 10 -- result is always < 0
-
-    if times < 0 then
-        inst.components.hunger:DoDelta(times * 5)
-    end
+    inst.components.hunger:DoDelta(-CLONE_HUNGER_COST)
 end
 
 local function OnChakraDelta(inst, data)
@@ -141,12 +137,10 @@ local function OnChakraDelta(inst, data)
     local rateModifier  = inst.components.sanity.rate_modifier
 
     if chakra < 20 and not hasTag then
-        inst.components.sanity.rate_modifier = rateModifier / 2
-
+        inst.components.sanity.rate_modifier = rateModifier * 2
         inst:AddTag('double_sanity_loss')
     elseif chakra >= 20 and hasTag then
-        inst.components.sanity.rate_modifier = rateModifier * 2
-
+        inst.components.sanity.rate_modifier = rateModifier / 2
         inst:RemoveTag('double_sanity_loss')
     end
 end
@@ -163,7 +157,7 @@ local function master_postinit(inst)
 	
 	-- Stats	
 	inst.components.health:SetMaxHealth(180)
-	inst.components.hunger:SetMax(120)
+	inst.components.hunger:SetMax(150)
 	inst.components.sanity:SetMax(220)
 	
 	-- Damage multiplier (optional)
