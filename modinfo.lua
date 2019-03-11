@@ -9,7 +9,7 @@ forumthread = "http://kuzirashi.github.io"
 
 
 -- This lets other players know if your mod is out of date, update it to match the current version in the game
-api_version = 11
+api_version = 10
 
 -- Compatible with Don't Starve Together
 dst_compatible = true
