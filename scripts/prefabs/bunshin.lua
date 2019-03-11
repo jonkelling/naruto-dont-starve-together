@@ -4,9 +4,12 @@ local assets =
     Asset("SOUND", "sound/maxwell.fsb"),
     Asset("ANIM", "anim/swap_pickaxe.zip"),
     Asset("ANIM", "anim/swap_axe.zip"),
-    Asset("ANIM", "anim/basickunai.zip"),
-    Asset("ANIM", "anim/swap_basickunai.zip")
 }
+
+if NINJATOOLSMOD then
+    table.insert(assets, Asset("ANIM", "anim/basickunai.zip"))
+    table.insert(assets, Asset("ANIM", "anim/swap_basickunai.zip"))
+end
 
 local brain = require "brains/bunshinbrain"
 
@@ -17,12 +20,18 @@ local items =
     SWORD = "swap_basickunai"
 }
 
+if not NINJATOOLSMOD then
+    items["SWORD"] = "swap_spear"
+end
+
 local function EquipItem(inst, item)
+    -- if NINJATOOLSMOD then
     if item then
-        inst.AnimState:OverrideSymbol("swap_object", 'swap_basickunai', 'swap_basickunai')
+        inst.AnimState:OverrideSymbol("swap_object", items["SWORD"], items["SWORD"])
         inst.AnimState:Show("ARM_carry") 
         inst.AnimState:Hide("ARM_normal")
     end
+    -- end
 end
 
 local function die(inst)

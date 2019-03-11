@@ -42,13 +42,19 @@ local start_inv = {
     "kunai"
 }
 
+if not NINJATOOLSMOD then
+    start_inv = {
+        "bunshinjutsu"
+    }
+end
+
 -- When the character is revived from human
 local function onbecamehuman(inst)
 	-- Set speed when loading or reviving from ghost (optional)
 	inst.components.locomotor.walkspeed = 5
 	inst.components.locomotor.runspeed = 7
 
-    if not KnownModIndex:IsModEnabled("workshop-644104565") then
+    if not JUTSUMOD then
         if CONTROLS then
             CONTROLS.chakraindicator:Show()
         end
@@ -57,7 +63,7 @@ end
 
 
 local function OnBecameGhost(inst)
-    if not KnownModIndex:IsModEnabled("workshop-644104565") then
+    if not JUTSUMOD then
         if CONTROLS then
             CONTROLS.chakraindicator:Hide()
         end
@@ -115,7 +121,7 @@ end
 
 local function OnChakraDelta(inst, data)
     local chakra = nil
-    if not KnownModIndex:IsModEnabled("workshop-644104565") then
+    if not JUTSUMOD then
         chakra = inst.components.narutochakra.currentchakra
     else 
         chakra = inst.components.chakra:GetCurrent()
@@ -159,7 +165,7 @@ local function master_postinit(inst)
 	inst.OnLoad = OnLoad
     inst.OnNewSpawn = OnNewSpawn
 
-    if not KnownModIndex:IsModEnabled("workshop-644104565") then
+    if not JUTSUMOD then
         inst:AddComponent('narutochakra')
         inst.components.narutochakra:SetMaxChakra(100)
         inst.components.narutochakra:StartRegen(1, 10)

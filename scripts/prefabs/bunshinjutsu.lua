@@ -17,7 +17,7 @@ end
 
 local function canRead(inst)
     --return inst.components.sanity:GetMaxWithPenalty() >= TUNING.SHADOWWAXWELL_SANITY_PENALTY
-    if KnownModIndex:IsModEnabled("workshop-644104565") then
+    if JUTSUMOD then
         return inst.components.chakra:CheckEnough(CLONE_CHAKRA_COST)
     else
         return inst.components.narutochakra.currentchakra > CLONE_CHAKRA_COST -- > instead of >= so player doesn't die
@@ -54,7 +54,7 @@ local function onread(inst, reader, ignorecosts)
             reader.components.talker:Say('Kage Bunshin no Jutsu!')
         end
         
-        if KnownModIndex:IsModEnabled("workshop-644104565") then
+        if JUTSUMOD then
             reader.components.chakra:UseAmount(CLONE_CHAKRA_COST)
             reader.components.hunger:DoDelta(-CLONE_HUNGER_COST)
         else

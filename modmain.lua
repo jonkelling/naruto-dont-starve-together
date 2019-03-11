@@ -82,6 +82,9 @@ GLOBAL.CLONE_HEALTH 		= GetModConfigData("clone_health")
 GLOBAL.CLONE_DAMAGE 		= GetModConfigData("clone_damage")
 GLOBAL.CLONE_LIFETIME 		= GetModConfigData("clone_lifetime")
 
+GLOBAL.NINJATOOLSMOD        = GLOBAL.KnownModIndex:IsModEnabled("workshop-1679106997")
+GLOBAL.JUTSUMOD             = GLOBAL.KnownModIndex:IsModEnabled("workshop-644104565")
+
 AddMinimapAtlas("images/map_icons/naruto.xml")
 
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
@@ -89,7 +92,7 @@ AddModCharacter("naruto", "MALE")
 
 GLOBAL.CONTROLS = nil
 
-if not GLOBAL.KnownModIndex:IsModEnabled("workshop-644104565") then
+if not GLOBAL.JUTSUMOD then
 	local ChakraBadge = GLOBAL.require("widgets/narutochakrabadge")
 
 	local function AddChakraIndicator(self)
