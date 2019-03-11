@@ -1,15 +1,15 @@
 -- This information tells other players more about the mod
 name = "Naruto"
 description = "One day I'll become Hokage!"
-author = "Kuzirashi & Shikate"
-version = "0.1.0" -- This is the version of the template. Change it to your own number.
+author = "Jon Kelling, originally by Kuzirashi & Shikate"
+version = "0.2.0" -- This is the version of the template. Change it to your own number.
 
 -- This is the URL name of the mod's thread on the forum; the part after the ? and before the first & in the url
 forumthread = "http://kuzirashi.github.io"
 
 
 -- This lets other players know if your mod is out of date, update it to match the current version in the game
-api_version = 10
+api_version = 11
 
 -- Compatible with Don't Starve Together
 dst_compatible = true

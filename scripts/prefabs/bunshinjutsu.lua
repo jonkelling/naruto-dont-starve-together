@@ -56,6 +56,7 @@ local function onread(inst, reader, ignorecosts)
         
         if KnownModIndex:IsModEnabled("workshop-644104565") then
             reader.components.chakra:UseAmount(CLONE_CHAKRA_COST)
+            reader.components.hunger:DoDelta(-CLONE_HUNGER_COST)
         else
             reader.components.narutochakra:DoDelta(-CLONE_CHAKRA_COST, 'Kage Bunshin no Jutsu', reader)
         end

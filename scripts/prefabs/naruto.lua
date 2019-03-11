@@ -113,17 +113,7 @@ local function common_postinit(inst)
     inst:ListenForEvent("ms_playerleft", function(src, player) OnPlayerLeft(inst, player) end, TheWorld) -- http://forums.kleientertainment.com/topic/56400-player-logout-eventhook-name/#entry656494
 end
 
-local function TakeHungerForChakra(inst, data)
-    if data == nil then return end
-
-    if data.amount == nil or data.amount >= 0 then return end
-
-    inst.components.hunger:DoDelta(-CLONE_HUNGER_COST)
-end
-
 local function OnChakraDelta(inst, data)
-    TakeHungerForChakra(inst, data)
-
     local chakra = nil
     if not KnownModIndex:IsModEnabled("workshop-644104565") then
         chakra = inst.components.narutochakra.currentchakra
