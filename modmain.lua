@@ -90,6 +90,43 @@ AddMinimapAtlas("images/map_icons/naruto.xml")
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("naruto", "MALE")
 
+local function OnChakraDirty(inst)
+	if inst ~= nil then
+		local current = inst.currentchakra:value()
+		local max = inst.maxchakra:value()
+		local penalty = inst.penaltychakra:value()
+		if max < 100 and not inst:HasTag("clone") then
+			max = 100
+		end
+		
+		if inst.components.chakra.max ~= max then
+			inst.components.chakra:SetMaxChakra(max)
+		end
+		
+		if inst.components.chakra.penalty ~= penalty then
+			inst.components.chakra:SetPenalty(penalty)
+		end
+		
+		inst.components.chakra:SetCurrentChakra(current)
+		
+		inst:PushEvent("chakradirty", {newpercent = current / max, current = current, max = max, penalty = penalty})
+	end
+end
+
+local function CloneChakra(inst)
+	if inst.components.chakra == nil then
+		inst:AddComponent("chakra")
+		inst.components.chakra:StartCharge(1, 3/2)
+		inst.maxchakra = GLOBAL.net_ushortint( inst.GUID, "chakramax", "currentdirty")
+		inst.currentchakra = GLOBAL.net_ushortint( inst.GUID, "chakracurrent", "currentdirty")
+		inst.penaltychakra = GLOBAL.net_float( inst.GUID, "chakrapenalty", "currentdirty")
+
+		-- inst.components.chakra:SetInfinite(true, false)
+	
+		inst:ListenForEvent("currentdirty", function(inst) OnChakraDirty(inst) end)
+	end	
+end
+
 local function BetterFlyingRaijinJutsuOnUse(jutsu, ninja)
 	local jv = jutsu.vars
 	ninja = jutsu.components.inventoryitem.owner or ninja
@@ -176,6 +213,8 @@ end
 GLOBAL.CONTROLS = nil
 
 if GLOBAL.JUTSUMOD then
+	AddPrefabPostInit("bunshin", CloneChakra)
+
 	AddPrefabPostInit("flyingraijin", function(inst)
 		inst:DoTaskInTime(1, function()
 			if inst.components.useableitem ~= nil then
@@ -187,14 +226,14 @@ else
 	local ChakraBadge = GLOBAL.require("widgets/narutochakrabadge")
 	local function AddChakraIndicator(self)
 		controls = self -- this just makes controls available in the rest of the modmain's functions
-
+	
 		controls.chakraindicator = controls.sidepanel:AddChild(ChakraBadge())
 		controls.chakraindicator:SetPosition(0, -151, 0)
-
+	
 		controls.chakraindicator:MoveToBack()
-
+	
 		controls.chakraindicator:SetClickable(false)
-
+	
 		GLOBAL.CONTROLS = controls
 	end
 	AddClassPostConstruct("widgets/controls", AddChakraIndicator)

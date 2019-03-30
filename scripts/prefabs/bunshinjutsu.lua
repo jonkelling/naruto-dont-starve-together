@@ -33,22 +33,28 @@ local function onread(inst, reader, ignorecosts)
         end
     end
 
+    -- if JUTSUMOD then
+    --     c_runjutsu("shadowclone")
+    --     -- for k,clone in pairs(reader.clones) do
+    --     --     clone:AddTag("ninja")
+    --     -- end
+    --     return true
+    -- end
+
     local theta = math.random() * 2 * PI
     local pt = inst:GetPosition()
     local radius = math.random(3, 6)
     local offset = FindWalkableOffset(pt, theta, radius, 12, true)
     if offset then
+        if JUTSUMOD then
+            reader.clones = (reader.clones or 0) + 1
+        end
+
         local bunshin = SpawnPrefab('bunshin')
         local pos = pt + offset
         bunshin.Transform:SetPosition(pos:Get())
         doeffects(inst, pos)
-        bunshin.components.follower:SetLeader(reader)
-
-        local head_item = reader.components.inventory.equipslots['head']
-
-        if head_item then
-            bunshin.components.inventory:Equip(SpawnPrefab(head_item.prefab))
-        end
+        bunshin.ninjaid = reader.userid
 
         if reader.components.talker then
             reader.components.talker:Say('Kage Bunshin no Jutsu!')
@@ -98,7 +104,6 @@ local function fn()
     MakeSmallBurnable(inst)
     MakeSmallPropagator(inst)
 
-    MakeHauntableLaunch(inst)
     AddHauntableCustomReaction(inst, function(inst, haunter)
         if math.random() <= TUNING.HAUNT_CHANCE_OCCASIONAL then
             inst.components.book.onread(inst, haunter, true)
