@@ -146,7 +146,7 @@ local function BetterFlyingRaijinJutsuOnUse(jutsu, ninja)
 	
 	for k,kunai in pairs(Ents) do
 		if kunai.prefab == "flyingraijinkunai" then
-			if kunai:HasTag(ninja.userid) then
+			if kunai:HasTag(ninja.userid) and not ninja.components.inventory:GetItemSlot(kunai) then
 				if kunai.GUID == ninja.lastkunai then
 					foundLastKunai = true
 				end
@@ -171,7 +171,7 @@ local function BetterFlyingRaijinJutsuOnUse(jutsu, ninja)
 	if canuse and totalkunais ~= 0 then
 		for k,kunai in ipairs(sortedKunai) do
 			if kunai.prefab == "flyingraijinkunai" and kunai:HasTag(ninja.userid) then
-				if not foundvalid and ninja.Transform:GetWorldPosition() ~= kunai.Transform:GetWorldPosition() and (kunai.GUID > ninja.lastkunai or totalkunais == 1 or (ninja.lastkunai == highestkunai and kunai.GUID == lowestkunai)) then
+				if not foundvalid and not ninja.components.inventory:GetItemSlot(kunai) and ninja.Transform:GetWorldPosition() ~= kunai.Transform:GetWorldPosition() and (kunai.GUID > ninja.lastkunai or totalkunais == 1 or (ninja.lastkunai == highestkunai and kunai.GUID == lowestkunai)) then
 					ninja.components.talker:Say("(Better) " .. jv.strings.use)
 					local xn, yn, zn = ninja.Transform:GetWorldPosition()
 					local x, y, z = kunai.Transform:GetWorldPosition()
