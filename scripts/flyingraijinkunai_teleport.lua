@@ -120,7 +120,7 @@ local function BetterFlyingRaijinJutsuOnUse(jutsu, ninja)
 		end
 	end
 	
-	jutsu.components.useableitem:StopUsingItem()
+	return false
 end
 
 return {
