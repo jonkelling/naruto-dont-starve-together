@@ -128,10 +128,3 @@ end
 return {
     BetterFlyingRaijinOnRead = BetterFlyingRaijinOnRead
 }
-	
-	return false
-end
-
-return {
-    BetterFlyingRaijinOnRead = BetterFlyingRaijinOnRead
-}
