@@ -47,19 +47,16 @@ local function Teleport(who, xf, zf)
     end
 end
 
-local function BetterFlyingRaijinJutsuOnUse(jutsu, ninja)
-	local jv = jutsu.vars
-	ninja = jutsu.components.inventoryitem.owner or ninja
+local function BetterFlyingRaijinOnRead(inst, reader)
+	local jv = inst.vars
+	local ninja = reader
 	local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
 	local canuse = ninja.components.chakra
-	local consumejutsu = true
 	local totalkunais = 0
 	local lowestkunai = 0
 	local highestkunai = 0
 	local foundvalid = false
-	-- local Ents = GLOBAL.Ents
 	local sortedKunai = {}
-	-- local SpawnPrefab = GLOBAL.SpawnPrefab
 	local foundLastKunai = false
 
 	ninja.lastkunai = ninja.lastkunai or -1
@@ -91,24 +88,29 @@ local function BetterFlyingRaijinJutsuOnUse(jutsu, ninja)
 	if canuse and totalkunais ~= 0 then
 		for k,kunai in ipairs(sortedKunai) do
 			if kunai.prefab == "flyingraijinkunai" and kunai:HasTag(ninja.userid) then
-				if not foundvalid and not ninja.components.inventory:GetItemSlot(kunai) and ninja.Transform:GetWorldPosition() ~= kunai.Transform:GetWorldPosition() and (kunai.GUID > ninja.lastkunai or totalkunais == 1 or (ninja.lastkunai == highestkunai and kunai.GUID == lowestkunai)) then
+				local nx, ny, nz = ninja.Transform:GetWorldPosition()
+				local kx, ky, kz = kunai.Transform:GetWorldPosition()
+				local notSamePos = (nx ~= kx or nz ~= kz)
+				
+				if not foundvalid and not ninja.components.inventory:GetItemSlot(kunai) and notSamePos and (kunai.GUID > ninja.lastkunai or totalkunais == 1 or (ninja.lastkunai == highestkunai and kunai.GUID == lowestkunai)) then
 					ninja.components.talker:Say("(Better) " .. jv.strings.use)
 					local xn, yn, zn = ninja.Transform:GetWorldPosition()
 					local x, y, z = kunai.Transform:GetWorldPosition()
 
-					SpawnPrefab("smoke").Transform:SetPosition(xn, yn, zn) -- smoke fx before cast
-					kunai:DoTaskInTime(.2, function() SpawnPrefab("smoke").Transform:SetPosition(x, y, z) end) -- smoke fx after cast
-                    kunai:DoTaskInTime(.1, function()
-                        Teleport(ninja, x, z)
-                        
-                        ninja.lastkunai = kunai.GUID
-                        
-                        if not HasInfiniteChakra then
-                            ninja.components.chakra:UseAmount(jv.chakra)
-                        end
-                    end)
+					SpawnPrefab("smoke").Transform:SetPosition(xn, yn, zn)
+					kunai:DoTaskInTime(.2, function() SpawnPrefab("smoke").Transform:SetPosition(x, y, z) end)
+					kunai:DoTaskInTime(.1, function()
+						Teleport(ninja, x, z)
+						
+						ninja.lastkunai = kunai.GUID
+						
+						if not HasInfiniteChakra then
+							ninja.components.chakra:UseAmount(jv.chakra)
+						end
+					end)
 					
 					foundvalid = true
+					return true
 				end			
 			end
 		end
@@ -116,13 +118,21 @@ local function BetterFlyingRaijinJutsuOnUse(jutsu, ninja)
 		if totalkunais == 0 then
 			ninja.components.talker:Say("(Better) " .. jv.strings.none)
 		elseif not canuse then
-			ninja.components.talker:Say(jutsu.nochakra)
+			ninja.components.talker:Say(inst.nochakra)
 		end
 	end
 	
-	jutsu.components.useableitem:StopUsingItem()
+	return false
 end
 
 return {
-    BetterFlyingRaijinJutsuOnUse = BetterFlyingRaijinJutsuOnUse
+    BetterFlyingRaijinOnRead = BetterFlyingRaijinOnRead
+}
+	
+	return false
+end
+
+return {
+    BetterFlyingRaijinJutsuOnUse = BetterFlyingRaijinJutsuOnUse,
+    BetterFlyingRaijinOnRead = BetterFlyingRaijinOnRead
 }
