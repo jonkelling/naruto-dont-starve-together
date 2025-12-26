@@ -136,11 +136,6 @@ if GLOBAL.JUTSUMOD then
 
 	AddPrefabPostInit("flyingraijin", function(inst)
 		inst:DoTaskInTime(1, function()
-			-- Keep useableitem for when equipped
-			if inst.components.useableitem ~= nil then
-				inst.components.useableitem:SetOnUseFn(BetterFlyingRaijin.BetterFlyingRaijinJutsuOnUse)
-			end
-			
 			-- Add book component for right-click from inventory
 			if not inst.components.book then
 				inst:AddComponent("book")

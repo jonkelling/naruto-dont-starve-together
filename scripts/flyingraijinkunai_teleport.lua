@@ -133,6 +133,5 @@ return {
 end
 
 return {
-    BetterFlyingRaijinJutsuOnUse = BetterFlyingRaijinJutsuOnUse,
     BetterFlyingRaijinOnRead = BetterFlyingRaijinOnRead
 }
