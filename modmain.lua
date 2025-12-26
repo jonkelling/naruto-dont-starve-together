@@ -148,13 +148,13 @@ if GLOBAL.JUTSUMOD then
 	end
 	AddAction(FLYINGRAIJIN_ACTION)
 
-	-- Add stategraph handler with no animation (instant)
-	AddStategraphActionHandler("wilson", GLOBAL.ActionHandler(FLYINGRAIJIN_ACTION, "doshortaction"))
-	AddStategraphActionHandler("wilson_client", GLOBAL.ActionHandler(FLYINGRAIJIN_ACTION, "doshortaction"))
+	-- Add stategraph handler with short animation
+	AddStategraphActionHandler("wilson", GLOBAL.ActionHandler(GLOBAL.ACTIONS.FLYINGRAIJIN_TELEPORT, "doshortaction"))
+	AddStategraphActionHandler("wilson_client", GLOBAL.ActionHandler(GLOBAL.ACTIONS.FLYINGRAIJIN_TELEPORT, "doshortaction"))
 
 	-- Add the action to flyingraijin items in inventory
 	AddComponentAction("INVENTORY", "inventoryitem", function(inst, doer, actions, right)
-		if right and inst.prefab == "flyingraijin" and doer:HasTag("ninja") then
+		if inst.prefab == "flyingraijin" then
 			table.insert(actions, GLOBAL.ACTIONS.FLYINGRAIJIN_TELEPORT)
 		end
 	end)
