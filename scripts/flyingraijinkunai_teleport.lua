@@ -47,9 +47,9 @@ local function Teleport(who, xf, zf)
     end
 end
 
-local function BetterFlyingRaijinOnRead(inst, reader)
+-- Shared teleport logic used by both OnRead and OnUse
+local function DoFlyingRaijin(inst, ninja)
 	local jv = inst.vars
-	local ninja = reader
 	local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
 	local canuse = ninja.components.chakra
 	local totalkunais = 0
@@ -125,6 +125,19 @@ local function BetterFlyingRaijinOnRead(inst, reader)
 	return false
 end
 
+-- For book component (right-click from inventory)
+local function BetterFlyingRaijinOnRead(inst, reader)
+	return DoFlyingRaijin(inst, reader)
+end
+
+-- For useableitem component (when equipped)
+local function BetterFlyingRaijinJutsuOnUse(jutsu, ninja)
+	ninja = jutsu.components.inventoryitem.owner or ninja
+	DoFlyingRaijin(jutsu, ninja)
+	return false  -- Required for useableitem to reset
+end
+
 return {
-    BetterFlyingRaijinOnRead = BetterFlyingRaijinOnRead
+    BetterFlyingRaijinOnRead = BetterFlyingRaijinOnRead,
+    BetterFlyingRaijinJutsuOnUse = BetterFlyingRaijinJutsuOnUse
 }
