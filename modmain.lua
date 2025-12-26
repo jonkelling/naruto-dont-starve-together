@@ -134,18 +134,37 @@ if GLOBAL.JUTSUMOD then
 
 	local BetterFlyingRaijin = GLOBAL.require("flyingraijinkunai_teleport")
 
+	-- Create custom action for immediate teleport (no animation)
+	local FLYINGRAIJIN_ACTION = GLOBAL.Action({priority = 10, instant = true})
+	FLYINGRAIJIN_ACTION.id = "FLYINGRAIJIN_TELEPORT"
+	FLYINGRAIJIN_ACTION.str = "Flying Raijin"
+	FLYINGRAIJIN_ACTION.fn = function(act)
+		local doer = act.doer
+		local invobject = act.invobject
+		if invobject and doer then
+			return BetterFlyingRaijin.DoFlyingRaijin(invobject, doer)
+		end
+		return false
+	end
+	AddAction(FLYINGRAIJIN_ACTION)
+
+	-- Add stategraph handler with no animation (instant)
+	AddStategraphActionHandler("wilson", GLOBAL.ActionHandler(FLYINGRAIJIN_ACTION, "doshortaction"))
+	AddStategraphActionHandler("wilson_client", GLOBAL.ActionHandler(FLYINGRAIJIN_ACTION, "doshortaction"))
+
+	-- Add the action to flyingraijin items in inventory
+	AddComponentAction("INVENTORY", "inventoryitem", function(inst, doer, actions, right)
+		if right and inst.prefab == "flyingraijin" and doer:HasTag("ninja") then
+			table.insert(actions, GLOBAL.ACTIONS.FLYINGRAIJIN_TELEPORT)
+		end
+	end)
+
 	AddPrefabPostInit("flyingraijin", function(inst)
 		inst:DoTaskInTime(1, function()
 			-- Keep useableitem for when equipped
 			if inst.components.useableitem ~= nil then
 				inst.components.useableitem:SetOnUseFn(BetterFlyingRaijin.BetterFlyingRaijinJutsuOnUse)
 			end
-			
-			-- Add book component for right-click from inventory
-			if not inst.components.book then
-				inst:AddComponent("book")
-			end
-			inst.components.book.onread = BetterFlyingRaijin.BetterFlyingRaijinOnRead
 		end)
 	end)
 else

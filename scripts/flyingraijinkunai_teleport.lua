@@ -138,6 +138,7 @@ local function BetterFlyingRaijinJutsuOnUse(jutsu, ninja)
 end
 
 return {
+    DoFlyingRaijin = DoFlyingRaijin,
     BetterFlyingRaijinOnRead = BetterFlyingRaijinOnRead,
     BetterFlyingRaijinJutsuOnUse = BetterFlyingRaijinJutsuOnUse
 }
